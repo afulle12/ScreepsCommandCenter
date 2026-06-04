@@ -116,7 +116,7 @@ Converts a number of ticks into a real-world duration from **right now**, and op
 
 ### Inputs
 
-- **Seconds per Tick** — The current server tick rate. Check [status.screeps.com](https://status.screeps.com) using the link on the tab; the rate varies by server and time of day. Typical values range from about 1.0 to 3.0 seconds per tick.
+- **Seconds per Tick** — The current server tick rate. Check [status.screeps.com](https://status.screeps.com) using the link on the tab; the rate varies by server and time of day. Typical values range from about 2.0 to 4.0 seconds per tick.
 - **Number of Ticks** — How many ticks until the event. For a nuke this is 50,000; for spawn time multiply parts × 3; for anything else read the game's countdown directly.
 
 ### Optional: Timezone Comparison
