@@ -39,7 +39,7 @@
         .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start;}
         .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;align-items:start;}
 
-        /* ── Time picker ── */
+        /* time picker */
         .time-picker-wrap{position:relative;}
         .time-display-btn{width:100%;padding:10px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:rgba(255,255,255,0.02);color:var(--text);text-align:left;display:flex;align-items:center;gap:8px;cursor:pointer;font-weight:400;font-size:14px;transition:border-color var(--speed) var(--ease),box-shadow var(--speed) var(--ease);}
         .time-display-btn:hover{border-color:rgba(255,255,255,0.12);transform:none;box-shadow:none;}
@@ -48,12 +48,8 @@
         .time-display-btn .time-val{flex:1;}
         .time-display-btn .chevron{font-size:10px;opacity:.5;transition:transform var(--speed) var(--ease);}
         .time-display-btn.open .chevron{transform:rotate(180deg);}
-
-        .time-popup{display:none;position:absolute;top:calc(100% + 6px);left:0;z-index:9999;
-            background:linear-gradient(180deg,#0e1c34,#09142a);border:1px solid rgba(255,255,255,0.07);
-            border-radius:12px;padding:16px;box-shadow:0 16px 48px rgba(0,0,0,0.7);min-width:280px;}
+        .time-popup{display:none;position:absolute;top:calc(100% + 6px);left:0;z-index:9999;background:linear-gradient(180deg,#0e1c34,#09142a);border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:16px;box-shadow:0 16px 48px rgba(0,0,0,0.7);min-width:280px;}
         .time-popup.open{display:block;}
-
         .time-popup-row{display:flex;align-items:center;gap:10px;justify-content:center;}
         .time-col{display:flex;flex-direction:column;align-items:center;gap:4px;}
         .time-col label{font-size:11px;color:#6a8ab8;margin-bottom:0;font-weight:600;letter-spacing:.5px;text-transform:uppercase;}
@@ -70,7 +66,6 @@
         .time-popup-footer{margin-top:14px;display:flex;gap:8px;justify-content:flex-end;}
         .time-popup-footer button{font-size:13px;padding:7px 14px;}
 
-        /* ── rest of original styles ── */
         .nuke-controls{display:flex;gap:14px;margin-bottom:12px;align-items:flex-start;}
         .map-panel{background:linear-gradient(180deg,rgba(11,18,36,0.6),rgba(7,16,38,0.6));padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.02);}
         .map-container{position:relative;width:100%;background:linear-gradient(180deg,#07102a,#061026);border-radius:8px;padding:8px;display:flex;align-items:center;justify-content:center;overflow:hidden;}
@@ -92,69 +87,103 @@
         .tile-highlight{position:fixed;pointer-events:none;z-index:9000;border:2px solid rgba(255,255,255,0.95);box-shadow:0 0 26px rgba(255,255,255,0.06);border-radius:2px;}
         @media(max-width:980px){.container{width:100%;padding:12px;}.nuke-controls{flex-direction:column;}.map-container{width:100%;height:420px;}.grid-2{grid-template-columns:1fr;}.grid-3{grid-template-columns:repeat(2,1fr);}.damage-grid{grid-template-columns:repeat(2,1fr);}}
         @media(max-width:520px){.grid-3{grid-template-columns:1fr;}.damage-grid{grid-template-columns:1fr;}}
-    
-/* Market tab */
-.market-controls{display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap;margin-bottom:12px}
-.market-panel{background:linear-gradient(180deg,rgba(11,18,36,0.6),rgba(7,16,38,0.6));padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.02)}
-.market-input{flex:1;min-width:300px}
-.market-input textarea{width:100%;height:180px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.03);color:#dfe7f5;padding:10px;border-radius:6px;resize:vertical}
-.market-actions{display:flex;flex-direction:column;gap:8px;padding-bottom:2px}
-.market-grid{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:12px;align-items:start}
-.market-map-wrap{position:relative;width:100%;min-height:520px;background:linear-gradient(180deg,#07102a,#061026);border-radius:8px;padding:8px;overflow:hidden}
-#marketCanvas{display:block;width:100%;height:520px;border-radius:6px;background:#091829;touch-action:none}
-.market-map-toolbar{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
-.market-map-toolbar .left{font-weight:700;color:#9fb4d8}
-.market-map-toolbar .right{display:flex;gap:8px;flex-wrap:wrap}
-.market-map-info{color:var(--muted);margin-top:8px;font-size:13px}
-.market-sidebar{background:linear-gradient(180deg,rgba(7,16,38,0.7),rgba(8,14,30,0.7));padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.02);min-height:520px}
-.market-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:10px}
-.market-stat{background:rgba(255,255,255,0.02);padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.02)}
-.market-stat .label{font-size:12px;color:#9fb4d8;margin-bottom:4px}
-.market-stat .value{font-size:18px;font-weight:700;color:#fff}
-.market-detail{margin-top:10px;background:rgba(255,255,255,0.02);padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.02)}
-.market-detail .row{margin-bottom:10px}
-.market-detail .k{font-size:12px;color:#9fb4d8;margin-bottom:4px}
-.market-detail .v{font-size:14px;color:#fff;line-height:1.4;word-break:break-word}
-.market-legend{display:flex;gap:10px;flex-wrap:wrap;color:#cfe1ff;font-size:13px;align-items:center;margin-top:10px}
-.market-legend .legend-item{display:flex;gap:6px;align-items:center}
-.market-swatch{width:14px;height:14px;border-radius:3px;border:1px solid rgba(0,0,0,0.2);box-shadow:0 2px 6px rgba(0,0,0,0.4)}
-#marketTooltip{position:fixed;pointer-events:none;display:none;z-index:9999;background:rgba(6,10,20,0.96);color:#fff;padding:8px 10px;border-radius:8px;font-size:13px;transform:translate(-50%,-120%);white-space:nowrap;box-shadow:0 12px 40px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.03)}
-.market-pill{display:inline-block;padding:4px 8px;border-radius:999px;font-size:12px;font-weight:700;margin-right:6px;margin-bottom:6px}
-.market-pill.out{background:rgba(39,174,96,0.18);color:#8cf0b1}
-.market-pill.in{background:rgba(192,57,43,0.18);color:#ffb0a8}
-.market-pill.both{background:rgba(31,109,255,0.18);color:#b9d2ff}
-.market-note{font-size:12px;color:#9fb4d8;margin-top:8px}
-@media (max-width:980px){.market-grid{grid-template-columns:1fr}.market-sidebar{min-height:auto}#marketCanvas{height:420px}.market-map-wrap{min-height:420px}}
 
+        /* Market tab */
+        .market-controls{display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap;margin-bottom:12px}
+        .market-panel{background:linear-gradient(180deg,rgba(11,18,36,0.6),rgba(7,16,38,0.6));padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.02)}
+        .market-input{flex:1;min-width:300px}
+        .market-input textarea{width:100%;height:180px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.03);color:#dfe7f5;padding:10px;border-radius:6px;resize:vertical}
+        .market-actions{display:flex;flex-direction:column;gap:8px;padding-bottom:2px}
+        .market-grid{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:12px;align-items:start}
+        .market-map-wrap{position:relative;width:100%;min-height:520px;background:linear-gradient(180deg,#07102a,#061026);border-radius:8px;padding:8px;overflow:hidden}
+        #marketCanvas{display:block;width:100%;height:520px;border-radius:6px;background:#091829;touch-action:none}
+        .market-map-toolbar{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+        .market-map-toolbar .left{font-weight:700;color:#9fb4d8}
+        .market-map-toolbar .right{display:flex;gap:8px;flex-wrap:wrap}
+        .market-map-info{color:var(--muted);margin-top:8px;font-size:13px}
+        .market-sidebar{background:linear-gradient(180deg,rgba(7,16,38,0.7),rgba(8,14,30,0.7));padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.02);min-height:520px}
+        .market-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:10px}
+        .market-stat{background:rgba(255,255,255,0.02);padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.02)}
+        .market-stat .label{font-size:12px;color:#9fb4d8;margin-bottom:4px}
+        .market-stat .value{font-size:18px;font-weight:700;color:#fff}
+        .market-detail{margin-top:10px;background:rgba(255,255,255,0.02);padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.02)}
+        .market-detail .row{margin-bottom:10px}
+        .market-detail .k{font-size:12px;color:#9fb4d8;margin-bottom:4px}
+        .market-detail .v{font-size:14px;color:#fff;line-height:1.4;word-break:break-word}
+        .market-legend{display:flex;gap:10px;flex-wrap:wrap;color:#cfe1ff;font-size:13px;align-items:center;margin-top:10px}
+        .market-legend .legend-item{display:flex;gap:6px;align-items:center}
+        .market-swatch{width:14px;height:14px;border-radius:3px;border:1px solid rgba(0,0,0,0.2);box-shadow:0 2px 6px rgba(0,0,0,0.4)}
+        #marketTooltip{position:fixed;pointer-events:none;display:none;z-index:9999;background:rgba(6,10,20,0.96);color:#fff;padding:8px 10px;border-radius:8px;font-size:13px;transform:translate(-50%,-120%);white-space:nowrap;box-shadow:0 12px 40px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.03)}
+        .market-pill{display:inline-block;padding:4px 8px;border-radius:999px;font-size:12px;font-weight:700;margin-right:6px;margin-bottom:6px}
+        .market-pill.out{background:rgba(39,174,96,0.18);color:#8cf0b1}
+        .market-pill.in{background:rgba(192,57,43,0.18);color:#ffb0a8}
+        .market-pill.both{background:rgba(31,109,255,0.18);color:#b9d2ff}
+        .market-note{font-size:12px;color:#9fb4d8;margin-top:8px}
+        @media (max-width:980px){.market-grid{grid-template-columns:1fr}.market-sidebar{min-height:auto}#marketCanvas{height:420px}.market-map-wrap{min-height:420px}}
+        .market-swatch.highway{background:rgba(255,215,0,0.22);border-color:#d4a017}
+        .market-swatch.crossroad{background:rgba(255,140,0,0.28);border-color:#ff8c00}
+        .market-swatch.sk{background:rgba(0,224,255,0.22);border-color:#00c8ff}
+        .market-swatch.center-sector{background:rgba(170,120,255,0.24);border-color:#a879ff}
+        .market-filter-box{margin-top:10px;background:rgba(255,255,255,0.02);padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.02)}
+        .market-filter-box label{display:block;margin-bottom:6px}
+        #marketResourceFilter{display:none}
+        .market-filter-chips{display:flex;flex-wrap:wrap;gap:8px;min-height:44px}
+        .market-chip{padding:7px 10px;border-radius:999px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.04);color:#cfe1ff;cursor:pointer;font-size:13px;font-weight:600;transition:background-color var(--speed) var(--ease),border-color var(--speed) var(--ease),transform var(--speed) var(--ease)}
+        .market-chip:hover{transform:translateY(-1px);border-color:rgba(255,255,255,0.18);background:rgba(255,255,255,0.07)}
+        .market-chip.active{background:linear-gradient(180deg,var(--accent),var(--accent-600));border-color:rgba(255,255,255,0.12);color:#fff}
+        .market-small-note{font-size:12px;color:#9fb4d8;margin-top:6px;line-height:1.4}
+        .market-filter-scroll{max-height:260px;overflow:auto;padding-right:4px;border-top:1px solid rgba(255,255,255,0.03);padding-top:8px}
+        .market-toggle-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+        .market-toggle-btn{padding:7px 10px;border-radius:999px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.04);color:#cfe1ff;cursor:pointer;font-size:13px;font-weight:600;transition:background-color var(--speed) var(--ease),border-color var(--speed) var(--ease),transform var(--speed) var(--ease)}
+        .market-toggle-btn:hover{transform:translateY(-1px);border-color:rgba(255,255,255,0.18);background:rgba(255,255,255,0.07)}
+        .market-toggle-btn.active{background:linear-gradient(180deg,var(--accent),var(--accent-600));border-color:rgba(255,255,255,0.12);color:#fff}
+        .market-filter-group{margin-bottom:10px}
 
-.market-swatch.highway{background:rgba(255,215,0,0.22);border-color:#d4a017}
-.market-swatch.crossroad{background:rgba(255,140,0,0.28);border-color:#ff8c00}
-
-
-.market-swatch.sk{background:rgba(0,224,255,0.22);border-color:#00c8ff}
-.market-swatch.center-sector{background:rgba(170,120,255,0.24);border-color:#a879ff}
-
-
-.market-filter-box{margin-top:10px;background:rgba(255,255,255,0.02);padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.02)}
-.market-filter-box label{display:block;margin-bottom:6px}
-#marketResourceFilter{display:none}
-.market-filter-chips{display:flex;flex-wrap:wrap;gap:8px;min-height:44px}
-.market-chip{padding:7px 10px;border-radius:999px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.04);color:#cfe1ff;cursor:pointer;font-size:13px;font-weight:600;transition:background-color var(--speed) var(--ease),border-color var(--speed) var(--ease),transform var(--speed) var(--ease)}
-.market-chip:hover{transform:translateY(-1px);border-color:rgba(255,255,255,0.18);background:rgba(255,255,255,0.07)}
-.market-chip.active{background:linear-gradient(180deg,var(--accent),var(--accent-600));border-color:rgba(255,255,255,0.12);color:#fff}
-.market-small-note{font-size:12px;color:#9fb4d8;margin-top:6px;line-height:1.4}
-
-
-.market-filter-scroll{max-height:260px;overflow:auto;padding-right:4px;border-top:1px solid rgba(255,255,255,0.03);padding-top:8px}
-.market-toggle-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
-.market-toggle-btn{padding:7px 10px;border-radius:999px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.04);color:#cfe1ff;cursor:pointer;font-size:13px;font-weight:600;transition:background-color var(--speed) var(--ease),border-color var(--speed) var(--ease),transform var(--speed) var(--ease)}
-.market-toggle-btn:hover{transform:translateY(-1px);border-color:rgba(255,255,255,0.18);background:rgba(255,255,255,0.07)}
-.market-toggle-btn.active{background:linear-gradient(180deg,var(--accent),var(--accent-600));border-color:rgba(255,255,255,0.12);color:#fff}
-
-
-.market-filter-group{margin-bottom:10px}
-
-</style>
+        /* Setup tab */
+        .setup-section{margin-bottom:24px}
+        .setup-section-title{font-size:15px;font-weight:800;color:#cfe6ff;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+        .setup-section-title .icon{font-size:17px}
+        .setup-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:10px;margin-bottom:20px}
+        .setup-card{background:linear-gradient(180deg,rgba(10,20,42,0.9),rgba(7,14,30,0.9));border:1px solid rgba(255,255,255,0.04);border-radius:10px;padding:12px;transition:transform 180ms,box-shadow 180ms}
+        .setup-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,0.4)}
+        .setup-card .card-icon{font-size:20px;margin-bottom:5px}
+        .setup-card .card-title{font-weight:700;color:#cfe6ff;font-size:13px;margin-bottom:3px}
+        .setup-card .card-desc{color:#9fb4d8;font-size:12px;line-height:1.45}
+        .setup-steps{display:flex;flex-direction:column;gap:10px}
+        .setup-step{display:flex;gap:12px;align-items:flex-start}
+        .setup-step-num{flex-shrink:0;width:26px;height:26px;border-radius:50%;background:linear-gradient(180deg,var(--accent),var(--accent-600));color:#fff;font-weight:800;font-size:12px;display:flex;align-items:center;justify-content:center}
+        .setup-step-body{flex:1}
+        .setup-step-body h4{color:#cfe6ff;font-size:13px;font-weight:700;margin-bottom:3px}
+        .setup-step-body p{color:#9fb4d8;font-size:13px;line-height:1.5;margin-bottom:6px}
+        .code-block-wrap{position:relative;background:rgba(4,8,20,0.9);border:1px solid rgba(255,255,255,0.07);border-radius:8px;overflow:hidden;margin-bottom:8px}
+        .code-block-header{display:flex;justify-content:space-between;align-items:center;padding:7px 12px;background:rgba(255,255,255,0.025);border-bottom:1px solid rgba(255,255,255,0.05)}
+        .code-block-label{color:#9fb4d8;font-size:12px;font-weight:700;letter-spacing:0.3px}
+        .code-block-actions{display:flex;gap:6px}
+        .code-copy-btn{padding:4px 10px;font-size:12px;border-radius:6px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.04);color:#cfe1ff;cursor:pointer;font-weight:600;transition:background 180ms,transform 180ms}
+        .code-copy-btn:hover{background:rgba(31,109,255,0.2);transform:translateY(-1px);box-shadow:none}
+        .code-copy-btn.copied{background:rgba(39,174,96,0.25);color:#8cf0b1;border-color:rgba(39,174,96,0.3)}
+        .code-dl-btn{padding:4px 10px;font-size:12px;border-radius:6px;border:none;background:linear-gradient(180deg,var(--success),#1f7f4d);color:#042216;cursor:pointer;font-weight:700;transition:transform 180ms}
+        .code-dl-btn:hover{transform:translateY(-1px);box-shadow:none}
+        .code-block-pre{margin:0;padding:10px 12px;font-family:'Cascadia Code','Fira Code','Consolas',monospace;font-size:12px;line-height:1.6;color:#c9d8f0;overflow:auto;max-height:280px;white-space:pre}
+        .code-block-pre.expanded{max-height:none}
+        .code-expand-btn{width:100%;padding:6px;background:rgba(255,255,255,0.025);border:none;border-top:1px solid rgba(255,255,255,0.04);color:#9fb4d8;font-size:12px;cursor:pointer;transition:background 180ms;text-align:center}
+        .code-expand-btn:hover{background:rgba(31,109,255,0.1);transform:none;box-shadow:none}
+        .setup-divider{border:none;border-top:1px solid rgba(255,255,255,0.04);margin:18px 0}
+        .setup-cmd-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:6px}
+        .setup-cmd-table th{text-align:left;padding:7px 10px;color:#9fb4d8;font-weight:700;border-bottom:1px solid rgba(255,255,255,0.06);font-size:11px;letter-spacing:0.3px;text-transform:uppercase}
+        .setup-cmd-table td{padding:7px 10px;color:#dfe7f5;border-bottom:1px solid rgba(255,255,255,0.03);vertical-align:top;font-size:13px}
+        .setup-cmd-table td:first-child{font-family:'Cascadia Code','Fira Code','Consolas',monospace;color:#c9d8f0;font-size:12px;white-space:nowrap}
+        .setup-cmd-table tr:last-child td{border-bottom:none}
+        .setup-cmd-table tr:hover td{background:rgba(255,255,255,0.015)}
+        .setup-tag{display:inline-block;padding:2px 7px;border-radius:4px;font-size:11px;font-weight:700;margin-left:6px;vertical-align:middle}
+        .setup-tag.market{background:rgba(39,174,96,0.18);color:#8cf0b1}
+        .setup-tag.nuke{background:rgba(192,57,43,0.18);color:#ffb0a8}
+        .setup-tag.info{background:rgba(31,109,255,0.18);color:#b9d2ff}
+        .setup-note{background:rgba(31,109,255,0.06);border:1px solid rgba(31,109,255,0.16);border-radius:8px;padding:9px 12px;font-size:13px;color:#9fb4d8;line-height:1.5;margin-top:8px}
+        .setup-note strong{color:#cfe6ff}
+        .setup-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+        @media(max-width:680px){.setup-cards{grid-template-columns:repeat(2,1fr)}.setup-grid-2{grid-template-columns:1fr}}
+    </style>
 </head>
 <body>
 <div class="container">
@@ -163,11 +192,12 @@
         <div class="subtitle">Utilities: ETA, Nuke Simulator, Body Calculator</div>
     </div>
     <div class="tabs" role="tablist">
-        <button class="tab-button" onclick="switchTab('eta')">Tick ETA</button>
-        <button class="tab-button active" onclick="switchTab('reverse')">Time → Ticks</button>
-        <button class="tab-button" onclick="switchTab('nuke')">Nuke Simulator</button>
-        <button class="tab-button" onclick="switchTab('body')">Body Calculator</button>
-      <button class="tab-button" onclick="switchTab('market')">Market Map</button>
+        <button class="tab-button" data-tab="eta" onclick="switchTab('eta')">Tick ETA</button>
+        <button class="tab-button active" data-tab="reverse" onclick="switchTab('reverse')">Time → Ticks</button>
+        <button class="tab-button" data-tab="nuke" onclick="switchTab('nuke')">Nuke Simulator</button>
+        <button class="tab-button" data-tab="body" onclick="switchTab('body')">Body Calculator</button>
+        <button class="tab-button" data-tab="market" onclick="switchTab('market')">Market Map</button>
+        <button class="tab-button" data-tab="setup" onclick="switchTab('setup')">Setup & Docs</button>
     </div>
 
     <!-- ETA Tab -->
@@ -198,7 +228,7 @@
                     <div style="flex:1;padding:8px;border-radius:6px;"><div style="font-weight:700;color:#9fb4d8">Enemy Timezone</div><div id="enemyTime" style="margin-top:6px;font-weight:700"></div><div id="enemyDate" style="color:#9fb4d8;font-size:13px"></div><div id="enemyZoneName" style="color:#8da9d1;font-size:12px;margin-top:6px"></div></div>
                 </div>
             </div>
-            <div id="countdownBox" style="display:none;margin-top:12px;display:flex;align-items:center;gap:12px;">
+            <div id="countdownBox" style="display:none;margin-top:12px;align-items:center;gap:12px;">
                 <div><div id="countdownTimer" style="font-size:28px;font-weight:700;color:#cfe6ff">--:--:--</div><div id="countdownTarget" style="color:#9fb4d8;font-size:13px">Target: --</div></div>
                 <button onclick="clearCountdown()" style="background:#c0392b;color:#fff;border-radius:6px;padding:8px 10px">Clear</button>
             </div>
@@ -211,7 +241,6 @@
             <div><label>Seconds per Tick</label><input id="reverseSecondsPerTick" type="number" value="1.0" step="0.1" min="0.1"/></div>
             <div><label>Target Date</label><input id="targetDate" type="date" style="width:100%"/></div>
         </div>
-        <!-- Time of day row -->
         <div style="margin-top:10px;">
             <label>Time of Day</label>
             <div class="time-picker-wrap" id="timePickerWrap">
@@ -307,10 +336,8 @@
         </div>
     </div>
 
-    
-
-      <!-- Market Tab -->
-      <div id="market" class="tab-content">
+    <!-- Market Tab -->
+    <div id="market" class="tab-content">
         <div class="market-controls">
           <div class="market-input">
             <label>Paste Room Trading Summary</label>
@@ -389,10 +416,130 @@
             </div>
           </div>
         </div>
-      </div>
-      <div id="marketTooltip"></div>
+    </div>
 
-      <!-- Body Calculator Tab -->
+    <!-- Setup & Docs Tab -->
+    <div id="setup" class="tab-content">
+      <div class="setup-section">
+        <div class="setup-section-title"><span class="icon">🗺️</span> What's in this tool</div>
+        <div class="setup-cards">
+          <div class="setup-card"><div class="card-icon">⏱️</div><div class="card-title">Tick ETA</div><div class="card-desc">Ticks → real-world duration, with two-timezone comparison and a persistent live countdown</div></div>
+          <div class="setup-card"><div class="card-icon">📅</div><div class="card-title">Time → Ticks</div><div class="card-desc">Target date/time → tick count, so you can plan events down to the minute</div></div>
+          <div class="setup-card"><div class="card-icon">💥</div><div class="card-title">Nuke Simulator</div><div class="card-desc">Paste a nuke cost report, get a color-coded grid + per-structure damage breakdown</div></div>
+          <div class="setup-card"><div class="card-icon">🧬</div><div class="card-title">Body Calculator</div><div class="card-desc">Build and price any creep body; auto-optimize CARRY/MOVE pairs to a budget</div></div>
+          <div class="setup-card"><div class="card-icon">📈</div><div class="card-title">Market Map</div><div class="card-desc">Pan/zoom world map of net exporters (green) and importers (red), with resource filters</div></div>
+        </div>
+        <div class="setup-note"><strong>No install, no server, no build step.</strong> Everything runs client-side in a single HTML file. The only data that persists across sessions is the ETA countdown, stored in <code style="font-family:monospace;font-size:12px">localStorage</code>.</div>
+      </div>
+      <hr class="setup-divider"/>
+      <div class="setup-section">
+        <div class="setup-section-title"><span class="icon">📈</span> Market Map — Screeps Integration <span class="setup-tag market">marketMap.js</span></div>
+        <div class="setup-grid-2">
+          <div>
+            <div class="setup-steps">
+              <div class="setup-step"><div class="setup-step-num">1</div><div class="setup-step-body"><h4>Copy marketMap.js into your source folder</h4><p>Drop the file next to your <code style="font-family:monospace;font-size:12px">main.js</code>. The file name must match exactly.</p></div></div>
+              <div class="setup-step"><div class="setup-step-num">2</div><div class="setup-step-body"><h4>Add one line to main.js</h4><p>The module registers <code style="font-family:monospace;font-size:12px">global.marketMap</code> itself — no loop work needed.</p></div></div>
+              <div class="setup-step"><div class="setup-step-num">3</div><div class="setup-step-body"><h4>Run in the Screeps console</h4><p>Copy the output table (header row through last data row) and paste it into the Market Map tab.</p></div></div>
+            </div>
+          </div>
+          <div>
+            <div class="code-block-wrap">
+              <div class="code-block-header"><span class="code-block-label">main.js — add this line</span><div class="code-block-actions"><button class="code-copy-btn" onclick="copyCode(this,'require(\'marketMap\');')">Copy</button></div></div>
+              <pre class="code-block-pre">require('marketMap');</pre>
+            </div>
+            <div class="code-block-wrap">
+              <div class="code-block-header"><span class="code-block-label">Screeps console</span><div class="code-block-actions"><button class="code-copy-btn" onclick="copyCode(this,'marketMap()')">Copy</button></div></div>
+              <pre class="code-block-pre">marketMap()</pre>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:12px">
+          <div class="code-block-wrap">
+            <div class="code-block-header">
+              <span class="code-block-label">📄 marketMap.js — full source</span>
+              <div class="code-block-actions">
+                <button class="code-copy-btn" onclick="copySourceFile(this,'marketMap')">Copy</button>
+                <button class="code-dl-btn" onclick="downloadSourceFile('marketMap','marketMap.js')">Download .js</button>
+              </div>
+            </div>
+            <pre class="code-block-pre" id="mmSourcePre"></pre>
+            <button class="code-expand-btn" onclick="toggleExpand(this,'mmSourcePre')">▼ Show full file</button>
+          </div>
+        </div>
+      </div>
+      <hr class="setup-divider"/>
+      <div class="setup-section">
+        <div class="setup-section-title"><span class="icon">💥</span> Nuke Simulator — Screeps Integration <span class="setup-tag nuke">nukeAnalyze.js</span></div>
+        <div class="setup-grid-2">
+          <div>
+            <div class="setup-steps">
+              <div class="setup-step"><div class="setup-step-num">1</div><div class="setup-step-body"><h4>Copy nukeAnalyze.js into your source folder</h4><p>Same directory as <code style="font-family:monospace;font-size:12px">main.js</code>. Exact file name required.</p></div></div>
+              <div class="setup-step"><div class="setup-step-num">2</div><div class="setup-step-body"><h4>Wire into main.js</h4><p>Require the module, expose its globals, and call <code style="font-family:monospace;font-size:12px">processPendingNukeAnalyze()</code> inside your loop every tick so observer auto-complete works.</p></div></div>
+              <div class="setup-step"><div class="setup-step-num">3</div><div class="setup-step-body"><h4>Run a report in the console</h4><p>Use <code style="font-family:monospace;font-size:12px">nukeIncoming()</code> if nukes are landing on you, or <code style="font-family:monospace;font-size:12px">nukeAnalyzeCost()</code> to analyze a planned strike. Copy the report block and paste it into the Nuke Simulator tab.</p></div></div>
+            </div>
+            <div class="setup-note" style="margin-top:12px"><strong>Optional soft-dependencies</strong> — nukeAnalyze works without these; features degrade gracefully:<br><br>
+              <code style="font-family:monospace;font-size:11px">iff</code> — whitelist check for friendly players<br>
+              <code style="font-family:monospace;font-size:11px">marketBuy</code> — buy-side prices for cost estimates<br>
+              <code style="font-family:monospace;font-size:11px">roleOperator</code> — PWR_OPERATE_OBSERVER fallback
+            </div>
+          </div>
+          <div>
+            <div class="code-block-wrap">
+              <div class="code-block-header"><span class="code-block-label">main.js — full wiring</span><div class="code-block-actions"><button class="code-copy-btn" id="mainJsCopyBtn" onclick="copyCode(this, getMainJsSnippet())">Copy</button></div></div>
+              <pre class="code-block-pre" id="mainJsSnippetPre"></pre>
+            </div>
+            <div class="code-block-wrap" style="margin-top:8px">
+              <div class="code-block-header"><span class="code-block-label">Console — incoming nukes</span><div class="code-block-actions"><button class="code-copy-btn" onclick="copyCode(this,&quot;nukeIncoming()&quot;)">Copy</button></div></div>
+              <pre class="code-block-pre">nukeIncoming()           // all owned rooms
+nukeIncoming('W1N46')    // one specific room</pre>
+            </div>
+            <div class="code-block-wrap" style="margin-top:8px">
+              <div class="code-block-header"><span class="code-block-label">Console — plan a strike</span><div class="code-block-actions"><button class="code-copy-btn" onclick="copyCode(this,&quot;nukeAnalyzeCost('W5N10', 25, 25)&quot;)">Copy</button></div></div>
+              <pre class="code-block-pre">nukeAnalyzeCost('W5N10', 25, 25)
+// stacked strikes:
+nukeAnalyzeCost('W5N10', [{x:25,y:25},{x:30,y:28}])</pre>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:12px">
+          <div class="code-block-wrap">
+            <div class="code-block-header">
+              <span class="code-block-label">📄 nukeAnalyze.js — full source (1,500+ lines)</span>
+              <div class="code-block-actions">
+                <button class="code-copy-btn" onclick="copySourceFile(this,'nukeAnalyze')">Copy</button>
+                <button class="code-dl-btn" onclick="downloadSourceFile('nukeAnalyze','nukeAnalyze.js')">Download .js</button>
+              </div>
+            </div>
+            <pre class="code-block-pre" id="naSourcePre"></pre>
+            <button class="code-expand-btn" onclick="toggleExpand(this,'naSourcePre')">▼ Show full file</button>
+          </div>
+        </div>
+      </div>
+      <hr class="setup-divider"/>
+      <div class="setup-section">
+        <div class="setup-section-title"><span class="icon">⌨️</span> Console Command Reference</div>
+        <table class="setup-cmd-table">
+          <thead><tr><th>Command</th><th>Module</th><th>What it does</th></tr></thead>
+          <tbody>
+            <tr><td>marketMap()</td><td><span class="setup-tag market">market</span></td><td>Scans all active orders, groups by room, outputs the table to paste into Market Map</td></tr>
+            <tr><td>nukeIncoming()</td><td><span class="setup-tag nuke">nuke</span></td><td>Scans all owned rooms for incoming nukes, auto-runs stacked damage analysis — paste into Nuke Simulator</td></tr>
+            <tr><td>nukeIncoming('ROOM')</td><td><span class="setup-tag nuke">nuke</span></td><td>Same but limited to one room</td></tr>
+            <tr><td>nukeAnalyzeCost('R', x, y)</td><td><span class="setup-tag nuke">nuke</span></td><td>Single planned strike — generates the pasted report format</td></tr>
+            <tr><td>nukeAnalyzeCost('R', [{x,y},…])</td><td><span class="setup-tag nuke">nuke</span></td><td>Multi-strike with stacked damage</td></tr>
+            <tr><td>nukeAnalyze('ROOM')</td><td><span class="setup-tag nuke">nuke</span></td><td>Find the best single offensive strike position by credit value (output not pasted into frontend)</td></tr>
+            <tr><td>nukeAnalyze('ROOM', N)</td><td><span class="setup-tag nuke">nuke</span></td><td>Find the best N sequential strike positions</td></tr>
+            <tr><td>nukeAnalyzeSelf()</td><td><span class="setup-tag nuke">nuke</span></td><td>Compact best-strike summary for all your owned rooms</td></tr>
+            <tr><td>nukeThreat('ROOM')</td><td><span class="setup-tag nuke">nuke</span></td><td>Scan surrounding rooms for hostile nukers; test if they can destroy all key structures</td></tr>
+            <tr><td>nukeThreatStatus('ROOM')</td><td><span class="setup-tag nuke">nuke</span></td><td>Check progress of an active threat scan</td></tr>
+            <tr><td>nukeThreatCancel('ROOM')</td><td><span class="setup-tag nuke">nuke</span></td><td>Cancel and clean up a threat scan</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="marketTooltip"></div>
+
+    <!-- Body Calculator Tab -->
     <div id="body" class="tab-content">
         <div class="grid-2">
             <div><label>Energy Budget</label><input id="budget" type="number" min="50"/></div>
@@ -420,6 +567,10 @@
 <div id="mapTooltip"></div>
 
 <script>
+// ── XSS helpers ─────────────────────────────────────────────────────────────
+function escHtml(s) {
+    return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
 // ── Constants ──────────────────────────────────────────────────────────────
 let nukes = [];
 let structures = [];
@@ -446,34 +597,28 @@ function toggleTimePicker() {
     const open  = popup.classList.contains('open');
     if (open) { closeTimePicker(); } else { popup.classList.add('open'); btn.classList.add('open'); }
 }
-
 function closeTimePicker() {
     document.getElementById('timePopup').classList.remove('open');
     document.getElementById('timeDisplayBtn').classList.remove('open');
 }
-
 function setAMPM(v) {
     tpAmPm = v;
     document.getElementById('amBtn').classList.toggle('active', v === 'AM');
     document.getElementById('pmBtn').classList.toggle('active', v === 'PM');
 }
-
 function spinTime(which, delta) {
     if (which === 'h') {
         const inp = document.getElementById('tpHour');
         let v = (parseInt(inp.value) || 12) + delta;
-        if (v > 12) v = 1;
-        if (v < 1)  v = 12;
+        if (v > 12) v = 1; if (v < 1) v = 12;
         inp.value = v;
     } else {
         const inp = document.getElementById('tpMinute');
         let v = (parseInt(inp.value) || 0) + delta;
-        if (v >= 60) v = 0;
-        if (v < 0)   v = 55;
+        if (v >= 60) v = 0; if (v < 0) v = 55;
         inp.value = String(v).padStart(2, '0');
     }
 }
-
 function clampTimeInput(which) {
     if (which === 'h') {
         const inp = document.getElementById('tpHour');
@@ -487,7 +632,6 @@ function clampTimeInput(which) {
         inp.value = String(v).padStart(2, '0');
     }
 }
-
 function confirmTimePicker() {
     const h  = parseInt(document.getElementById('tpHour').value)   || 12;
     const m  = parseInt(document.getElementById('tpMinute').value)  || 0;
@@ -495,12 +639,10 @@ function confirmTimePicker() {
     tpConfirmed = true;
     const display = `${h}:${String(m).padStart(2,'0')} ${ap}`;
     document.getElementById('timeDisplayVal').textContent = display;
-    // update clock icon to reflect hour roughly
     const iconMap = {1:'🕐',2:'🕑',3:'🕒',4:'🕓',5:'🕔',6:'🕕',7:'🕖',8:'🕗',9:'🕘',10:'🕙',11:'🕚',12:'🕛'};
     document.querySelector('.clock-icon').textContent = iconMap[h] || '🕐';
     closeTimePicker();
 }
-
 function clearTimePicker() {
     tpConfirmed = false;
     document.getElementById('timeDisplayVal').textContent = 'Select time…';
@@ -510,8 +652,6 @@ function clearTimePicker() {
     setAMPM('AM');
     closeTimePicker();
 }
-
-// Get the selected time as {hour24, minute} or null if not set
 function getPickedTime() {
     if (!tpConfirmed) return null;
     let h = parseInt(document.getElementById('tpHour').value) || 12;
@@ -520,8 +660,6 @@ function getPickedTime() {
     else                  { if (h !== 12) h += 12; }
     return { hour24: h, minute: m };
 }
-
-// Close popup when clicking outside
 document.addEventListener('click', function(e) {
     const wrap = document.getElementById('timePickerWrap');
     if (wrap && !wrap.contains(e.target)) closeTimePicker();
@@ -534,10 +672,11 @@ function switchTab(tabName) {
     const el = document.getElementById(tabName);
     if (el) el.classList.add('active');
     document.querySelectorAll('.tab-button').forEach(b => {
-        if (b.textContent.trim().toLowerCase().includes(tabName)) b.classList.add('active');
+        if (b.dataset.tab === tabName) b.classList.add('active');
     });
     if (tabName === 'nuke') setTimeout(initNukeMap, 80);
-      if (tabName === 'market') setTimeout(initMarketTab, 30);
+    if (tabName === 'market') setTimeout(initMarketTab, 30);
+    if (tabName === 'setup') initSetupTab();
 }
 
 // ── ETA ────────────────────────────────────────────────────────────────────
@@ -572,7 +711,6 @@ function calculateETA() {
     document.getElementById('etaResults').style.display = 'block';
     startCountdown(arrival.getTime());
 }
-
 function formatRemaining(ms) {
     if (ms <= 0) return '00:00:00';
     const ts = Math.floor(ms / 1000), d = Math.floor(ts / 86400), r = ts % 86400,
@@ -617,40 +755,29 @@ function restoreCountdownIfAny() {
 // ── Reverse (Time → Ticks) ─────────────────────────────────────────────────
 function calculateTicks() {
     const spt      = parseFloat(document.getElementById('reverseSecondsPerTick').value);
-    const dateVal  = document.getElementById('targetDate').value;  // "YYYY-MM-DD"
-    const pickedT  = getPickedTime();                               // {hour24, minute} or null
-
+    const dateVal  = document.getElementById('targetDate').value;
+    const pickedT  = getPickedTime();
     if (!spt || !dateVal) { alert('Please enter a seconds-per-tick value and a target date'); return; }
-
-    // Build target Date — if time was picked use it, otherwise midnight local
     let target;
     if (pickedT) {
-        // Parse date parts without timezone offset
         const [yr, mo, dy] = dateVal.split('-').map(Number);
         target = new Date(yr, mo - 1, dy, pickedT.hour24, pickedT.minute, 0, 0);
     } else {
         const [yr, mo, dy] = dateVal.split('-').map(Number);
         target = new Date(yr, mo - 1, dy, 0, 0, 0, 0);
     }
-
     const diff = target - new Date();
     if (diff <= 0) { alert('Target date/time must be in the future'); return; }
-
     const needed = Math.ceil(diff / 1000 / spt);
     const totalMin = Math.floor(diff / 60000);
     const days  = Math.floor(totalMin / 1440);
     const hours = Math.floor((totalMin % 1440) / 60);
     const mins  = totalMin % 60;
-
     let humanStr = '';
     if (days > 0)  humanStr += `${days}d `;
     if (hours > 0 || days > 0) humanStr += `${hours}h `;
     humanStr += `${mins}m`;
-
-    const timeStr = pickedT
-        ? `${document.getElementById('timeDisplayVal').textContent}`
-        : '12:00 AM (midnight)';
-
+    const timeStr = pickedT ? `${document.getElementById('timeDisplayVal').textContent}` : '12:00 AM (midnight)';
     document.getElementById('ticksNeeded').textContent = needed.toLocaleString() + ' ticks';
     document.getElementById('tickDetails').innerHTML =
         `<div>Target: <strong style="color:#cfe6ff">${dateVal} at ${timeStr}</strong></div>` +
@@ -740,7 +867,6 @@ function parseNukeAnalysisReport() {
     initNukeMap();
     showParseStatus(`Parsed ${nukes.length} nuke(s) and ${structures.length} structure(s)`);
 }
-
 function showParseStatus(msg) {
     const el = document.getElementById('parseStatus');
     if (el) { el.textContent = msg; setTimeout(() => { if (el.textContent === msg) el.textContent = ''; }, 5000); }
@@ -797,7 +923,8 @@ function drawMap() {
     const ts = parseInt(canvas.dataset.tileSize) || calculateTileSize();
     const mw = mapBounds.maxX - mapBounds.minX + 1, mh = mapBounds.maxY - mapBounds.minY + 1;
     const L = COORD_LBL;
-    canvas.width = L + mw * ts; canvas.height = L + mh * ts;
+    const newW = L + mw * ts, newH = L + mh * ts;
+    if (canvas.width !== newW || canvas.height !== newH) { canvas.width = newW; canvas.height = newH; }
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = '#091829'; ctx.fillRect(0, 0, canvas.width, canvas.height);
     function tx_(gx) { return L + (gx - mapBounds.minX) * ts; }
@@ -888,7 +1015,7 @@ function attachMapInteractions() {
             const dmg = struct.stackedDamage != null ? struct.stackedDamage : computeDamageAt(tx, ty);
             const ramp = struct.rampartHP || 0;
             tooltip.style.display = 'block';
-            tooltip.innerHTML = `<strong style="display:block">${(struct.type||'structure').toUpperCase()} at (${tx},${ty})</strong>
+            tooltip.innerHTML = `<strong style="display:block">${escHtml((struct.type||'structure').toUpperCase())} at (${escHtml(tx)},${escHtml(ty)})</strong>
                 <div style="font-size:12px;color:#cfe1ff">Rampart HP: ${prettyHP(ramp)}</div>
                 <div style="font-size:12px;color:#cfe1ff">Building HP: ${prettyHP(struct.buildingHits||0)}</div>
                 <div style="font-size:12px;color:#ffd2d2">Stacked damage: ${prettyHP(dmg)}</div>
@@ -1052,9 +1179,7 @@ function populateTimezones() {
     } catch(e) {}
 }
 
-// ── Boot ───────────────────────────────────────────────────────────────────
-
-// Market tab
+// ── Market tab ──────────────────────────────────────────────────────────────
 const MARKET_EXAMPLE = `Room | Sells | Buys | Net | Resources
 --------------------------------------------------------------------------------
 E58S1 | 0 | 6,463,179 | -6,463,179 | power(v)
@@ -1074,6 +1199,7 @@ let marketFilteredData = [];
 let marketScaleMode = 'detailed';
 let marketNpcFilter = 'all';
 let marketFlowFilter = 'all';
+
 function showMarketStatus(msg){
   const el = document.getElementById('marketStatus');
   if(!el) return;
@@ -1088,7 +1214,6 @@ function marketRoomToWorld(room){
   if(!m) return null;
   return { x: m[1].toUpperCase() === 'E' ? Number(m[2]) : -(Number(m[2]) + 1), y: m[3].toUpperCase() === 'N' ? Number(m[4]) : -(Number(m[4]) + 1) };
 }
-function marketResourceName(route){ return route && route.resource ? String(route.resource).toLowerCase() : ''; }
 function marketActiveResources(){
   const chips = document.getElementById('marketResourceFilterChips');
   if(chips){
@@ -1149,7 +1274,6 @@ function applyMarketFilters(){
   updateMarketSidebar();
   drawMarketMap();
 }
-
 function parseMarketRoutes(text){
   const out = [];
   const seen = new Set();
@@ -1163,11 +1287,7 @@ function parseMarketRoutes(text){
     const key = resource.toLowerCase() + '|' + marker;
     if(seen.has(key)) return;
     seen.add(key);
-    out.push({
-      resource,
-      marker,
-      meaning: marker === '^' ? 'sold there' : marker === 'v' ? 'bought there' : marker === 'B' ? 'both' : 'present'
-    });
+    out.push({ resource, marker, meaning: marker === '^' ? 'sold there' : marker === 'v' ? 'bought there' : marker === 'B' ? 'both' : 'present' });
   });
   return out;
 }
@@ -1261,15 +1381,7 @@ function setupMarketWorld(){
   };
   marketClampView();
 }
-
-function worldToRoomCoord(n, axis){
-  if(axis === 'x') return n >= 0 ? 'E' + n : 'W' + (-n - 1);
-  return n >= 0 ? 'N' + n : 'S' + (-n - 1);
-}
-function isHighwayRoomCoord(n){
-  const roomIndex = n >= 0 ? n : -n - 1;
-  return roomIndex % 10 === 0;
-}
+function isHighwayRoomCoord(n){ const roomIndex = n >= 0 ? n : -n - 1; return roomIndex % 10 === 0; }
 function isHighwayRoom(x, y){ return isHighwayRoomCoord(x) || isHighwayRoomCoord(y); }
 function isCrossroadRoom(x, y){ return isHighwayRoomCoord(x) && isHighwayRoomCoord(y); }
 function isNpcOrderRoom(x, y){ return isCrossroadRoom(x, y); }
@@ -1300,7 +1412,6 @@ function centerSectorCoord(n){ const r = roomIndexFromCoord(n) % 10; return r ==
 function sourceKeeperCoord(n){ const r = roomIndexFromCoord(n) % 10; return r >= 4 && r <= 6; }
 function isCenterSectorRoom(x, y){ return centerSectorCoord(x) && centerSectorCoord(y); }
 function isSourceKeeperRoom(x, y){ return sourceKeeperCoord(x) && sourceKeeperCoord(y) && !isCenterSectorRoom(x, y); }
-
 function marketWorldX(x){ return marketWorld.left + (x - marketBounds.minX + 0.5) * marketWorld.cell; }
 function marketWorldY(y){ return marketWorld.top + (marketBounds.maxY - y + 0.5) * marketWorld.cell; }
 function marketRadius(net){
@@ -1338,19 +1449,9 @@ function marketFullViewRect(){
   const worldAspect = marketWorld.width / Math.max(1, marketWorld.height);
   const canvasAspect = cssW / Math.max(1, cssH);
   let width, height;
-  if(canvasAspect >= worldAspect){
-    height = marketWorld.height;
-    width = height * canvasAspect;
-  } else {
-    width = marketWorld.width;
-    height = width / canvasAspect;
-  }
-  return {
-    width,
-    height,
-    x: (marketWorld.width - width) / 2,
-    y: (marketWorld.height - height) / 2
-  };
+  if(canvasAspect >= worldAspect){ height = marketWorld.height; width = height * canvasAspect; }
+  else { width = marketWorld.width; height = width / canvasAspect; }
+  return { width, height, x: (marketWorld.width - width) / 2, y: (marketWorld.height - height) / 2 };
 }
 function marketClampView(){
   const canvas = marketCanvas();
@@ -1362,14 +1463,9 @@ function marketClampView(){
   const cssW = canvas.clientWidth || 1;
   const cssH = canvas.clientHeight || 1;
   marketView.height = marketView.width * (cssH / cssW);
-  if(marketView.height > full.height){
-    marketView.height = full.height;
-    marketView.width = marketView.height * (cssW / cssH);
-  }
-  const minX = full.x;
-  const maxX = full.x + full.width - marketView.width;
-  const minY = full.y;
-  const maxY = full.y + full.height - marketView.height;
+  if(marketView.height > full.height){ marketView.height = full.height; marketView.width = marketView.height * (cssW / cssH); }
+  const minX = full.x, maxX = full.x + full.width - marketView.width;
+  const minY = full.y, maxY = full.y + full.height - marketView.height;
   marketView.x = Math.max(minX, Math.min(maxX, marketView.x));
   marketView.y = Math.max(minY, Math.min(maxY, marketView.y));
 }
@@ -1377,10 +1473,8 @@ function fitMarketView(){
   const canvas = marketCanvas();
   if(!canvas){ return; }
   const full = marketFullViewRect();
-  marketView.x = full.x;
-  marketView.y = full.y;
-  marketView.width = full.width;
-  marketView.height = full.height;
+  marketView.x = full.x; marketView.y = full.y;
+  marketView.width = full.width; marketView.height = full.height;
   marketClampView();
   drawMarketMap();
 }
@@ -1390,21 +1484,43 @@ function marketZoom(factor){
   const rect = canvas.getBoundingClientRect();
   marketZoomAt(rect.left + rect.width / 2, rect.top + rect.height / 2, factor);
 }
+
+// ── FIX: clamp width BEFORE repositioning; skip redraw if nothing changed ───
 function marketZoomAt(clientX, clientY, factor){
   const canvas = marketCanvas();
   if(!canvas || !marketData.length) return;
+
+  // Compute the clamped target size FIRST so:
+  // 1. x/y are anchored using the width we'll actually keep (no drift).
+  // 2. We can bail early when already at a zoom limit, avoiding a pointless
+  //    full redraw on every scroll tick while pinned at min/max zoom.
+  const full = marketFullViewRect();
+  const minWidth = Math.max(220, Math.round(marketWorld.width * 0.14));
+  const maxWidth = full.width;
+  const cssW = canvas.clientWidth || 1;
+  const cssH = canvas.clientHeight || 1;
+
+  let newWidth  = Math.max(minWidth, Math.min(maxWidth, marketView.width / factor));
+  let newHeight = newWidth * (cssH / cssW);
+  if(newHeight > full.height){ newHeight = full.height; newWidth = newHeight * (cssW / cssH); }
+
+  // Nothing would change — already at the zoom boundary. Skip the redraw.
+  if(Math.abs(newWidth - marketView.width) < 0.01) return;
+
   const rect = canvas.getBoundingClientRect();
   const px = (clientX - rect.left) / rect.width;
   const py = (clientY - rect.top) / rect.height;
   const worldX = marketView.x + px * marketView.width;
   const worldY = marketView.y + py * marketView.height;
-  marketView.width /= factor;
-  marketView.height /= factor;
+
+  marketView.width  = newWidth;
+  marketView.height = newHeight;
   marketView.x = worldX - px * marketView.width;
   marketView.y = worldY - py * marketView.height;
   marketClampView();
   drawMarketMap();
 }
+
 function marketScreenX(wx, canvas){ return ((wx - marketView.x) / marketView.width) * canvas.clientWidth; }
 function marketScreenY(wy, canvas){ return ((wy - marketView.y) / marketView.height) * canvas.clientHeight; }
 function drawMarketMap(){
@@ -1414,8 +1530,7 @@ function drawMarketMap(){
   const w = canvas.clientWidth || 300, h = canvas.clientHeight || 360;
   const activeData = marketFilteredData.length || marketData.length ? marketFilteredData : marketData;
   ctx.clearRect(0,0,w,h);
-  ctx.fillStyle = '#091829';
-  ctx.fillRect(0,0,w,h);
+  ctx.fillStyle = '#091829'; ctx.fillRect(0,0,w,h);
   if(!activeData.length){
     ctx.fillStyle = '#9fb4d8';
     ctx.font = '14px -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif';
@@ -1424,7 +1539,6 @@ function drawMarketMap(){
     ctx.fillText(hasSourceData ? 'No data for current filter selection.' : 'Paste market summary data to render the map.', w/2, h/2);
     return;
   }
-
   for(let gy = marketBounds.minY; gy <= marketBounds.maxY; gy++){
     for(let gx = marketBounds.minX; gx <= marketBounds.maxX; gx++){
       const left = marketScreenX(marketWorld.left + (gx - marketBounds.minX) * marketWorld.cell, canvas);
@@ -1445,7 +1559,6 @@ function drawMarketMap(){
       }
     }
   }
-
   for(let gx = marketBounds.minX; gx <= marketBounds.maxX + 1; gx++){
     const x = marketScreenX(marketWorld.left + (gx - marketBounds.minX) * marketWorld.cell, canvas);
     ctx.beginPath(); ctx.moveTo(x, marketScreenY(marketWorld.top, canvas)); ctx.lineTo(x, marketScreenY(marketWorld.height - marketWorld.bottom, canvas));
@@ -1458,14 +1571,11 @@ function drawMarketMap(){
     ctx.strokeStyle = ((marketBounds.maxY - gy + 1) % 5 === 0) ? 'rgba(148,163,184,0.55)' : 'rgba(148,163,184,0.22)';
     ctx.lineWidth = ((marketBounds.maxY - gy + 1) % 5 === 0) ? 1.4 : 1; ctx.stroke();
   }
-
   const scale = marketWorld.width / marketView.width;
   marketScaleMode = scale < 1.45 ? 'dots' : scale < 2.3 ? 'compact' : 'detailed';
-
   if(marketScaleMode !== 'dots'){
     ctx.font = '12px -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif';
-    ctx.fillStyle = '#94a3b8';
-    ctx.textAlign = 'center';
+    ctx.fillStyle = '#94a3b8'; ctx.textAlign = 'center';
     for(let x = marketBounds.minX; x <= marketBounds.maxX; x++){
       const label = x >= 0 ? 'E' + x : 'W' + (-x - 1);
       ctx.fillText(label, marketScreenX(marketWorldX(x), canvas), marketScreenY(marketWorld.top - 18, canvas));
@@ -1476,27 +1586,22 @@ function drawMarketMap(){
       ctx.fillText(label, marketScreenX(marketWorld.left - 12, canvas), marketScreenY(marketWorldY(y) + 4, canvas));
     }
   }
-
   activeData.forEach((d) => {
     const x = marketScreenX(marketWorldX(d.x), canvas);
     const y = marketScreenY(marketWorldY(d.y), canvas);
     const selected = marketSelected >= 0 && marketData[marketSelected] && marketData[marketSelected].room === d.room;
     const r = marketScaleMode === 'dots' ? marketDotRadius(d.net, activeData) : marketRadius(d.net) * (canvas.clientWidth / marketView.width);
     ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2);
-    ctx.fillStyle = d.net >= 0 ? 'rgba(39,174,96,0.90)' : 'rgba(192,57,43,0.90)';
-    ctx.fill();
+    ctx.fillStyle = d.net >= 0 ? 'rgba(39,174,96,0.90)' : 'rgba(192,57,43,0.90)'; ctx.fill();
     ctx.lineWidth = selected ? 2.5 : 1.2;
-    ctx.strokeStyle = d.net >= 0 ? '#b4f5c8' : '#ffd1cc';
-    ctx.stroke();
+    ctx.strokeStyle = d.net >= 0 ? '#b4f5c8' : '#ffd1cc'; ctx.stroke();
     if(marketScaleMode !== 'dots'){
       ctx.beginPath(); ctx.arc(x, y, Math.max(4, r * 0.45), 0, Math.PI * 2); ctx.fillStyle = 'rgba(255,255,255,0.82)'; ctx.fill();
       ctx.fillStyle = '#071027'; ctx.font = '700 12px -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
       ctx.fillText(d.net >= 0 ? '↑' : '↓', x, y + 1);
     }
   });
-
   if(marketScaleMode === 'dots') return;
-
   const placed = [];
   const rowsSorted = activeData.map((d,i)=>({d,i})).sort((a,b)=>Math.abs(b.d.net)-Math.abs(a.d.net));
   rowsSorted.forEach(({d,i}) => {
@@ -1504,14 +1609,11 @@ function drawMarketMap(){
     const x = marketScreenX(marketWorldX(d.x), canvas);
     const y = marketScreenY(marketWorldY(d.y), canvas);
     const r = marketRadius(d.net) * (canvas.clientWidth / marketView.width);
-    const full = d.room + ' ' + marketSigned(d.net);
-    const short = Math.abs(d.net) >= 1000000 ? `${d.room} ${d.net > 0 ? '+' : '-'}${(Math.abs(d.net)/1000000).toFixed(1)}M` : d.room;
-    const label = marketScaleMode === 'compact' && !selected ? d.room : full;
+    const full2 = d.room + ' ' + marketSigned(d.net);
+    const label = marketScaleMode === 'compact' && !selected ? d.room : full2;
     const candidates = [
-      {x, y:y-r-10, align:'center'},
-      {x, y:y+r+18, align:'center'},
-      {x:x+r+8, y:y-2, align:'left'},
-      {x:x-r-8, y:y-2, align:'right'}
+      {x, y:y-r-10, align:'center'},{x, y:y+r+18, align:'center'},
+      {x:x+r+8, y:y-2, align:'left'},{x:x-r-8, y:y-2, align:'right'}
     ];
     let pick = null;
     for(const c of candidates){
@@ -1586,10 +1688,8 @@ function showMarketTooltip(ev, idx){
   if(!tip || idx < 0 || !marketData[idx]) return;
   const d = marketData[idx];
   const routes = d.routes.length ? d.routes.map(r => `${r.resource} ${r.marker}`).join(', ') : '—';
-  tip.innerHTML = `<strong style="display:block">${d.room}</strong><div style="font-size:12px;color:#cfe1ff">Net ${marketSigned(d.net)}</div><div style="font-size:12px;color:#cfe1ff">Sells ${marketNum(d.sells)} • Buys ${marketNum(d.buys)}</div><div style="font-size:12px;color:#cfe1ff">Resources ${d.resources || '—'}</div><div style="font-size:12px;color:#cfe1ff">Routes ${routes}</div>`;
-  tip.style.left = ev.pageX + 'px';
-  tip.style.top = (ev.pageY - 8) + 'px';
-  tip.style.display = 'block';
+  tip.innerHTML = `<strong style="display:block">${escHtml(d.room)}</strong><div style="font-size:12px;color:#cfe1ff">Net ${marketSigned(d.net)}</div><div style="font-size:12px;color:#cfe1ff">Sells ${marketNum(d.sells)} • Buys ${marketNum(d.buys)}</div><div style="font-size:12px;color:#cfe1ff">Resources ${escHtml(d.resources || '—')}</div><div style="font-size:12px;color:#cfe1ff">Routes ${escHtml(routes)}</div>`;
+  tip.style.left = ev.pageX + 'px'; tip.style.top = (ev.pageY - 8) + 'px'; tip.style.display = 'block';
 }
 function hideMarketTooltip(){ const tip = document.getElementById('marketTooltip'); if(tip) tip.style.display = 'none'; }
 function selectMarketRoom(i){ if(i < 0 || i >= marketData.length) return; marketSelected = i; updateMarketSidebar(); updateMarketInfo(); drawMarketMap(); }
@@ -1608,9 +1708,7 @@ function attachMarketInteractions(){
       if(Math.abs(dx) + Math.abs(dy) > 1) marketDrag.moved = true;
       marketView.x = marketDrag.viewX - dx * (marketDrag.viewW / canvas.clientWidth);
       marketView.y = marketDrag.viewY - dy * (marketDrag.viewH / canvas.clientHeight);
-      marketClampView();
-      drawMarketMap();
-      return;
+      marketClampView(); drawMarketMap(); return;
     }
     const idx = marketHitTest(localX, localY);
     if(idx >= 0) showMarketTooltip(e, idx); else hideMarketTooltip();
@@ -1631,13 +1729,63 @@ function initMarketTab(){
   updateFlowFilterButtons();
 }
 
+// ── Setup tab ──────────────────────────────────────────────────────────────
+const _srcFiles = {
+  marketMap: "// marketMap\n// Console-only market liquidity snapshot. Groups active market orders by room.\n// Usage: type marketMap() in the Screeps console.\n\nconst ACCOUNT_RESOURCES = new Set([\n    SUBSCRIPTION_TOKEN,\n    CPU_UNLOCK,\n    PIXEL,\n    ACCESS_KEY\n].filter(Boolean));\n\nfunction formatInt(n) {\n    n = Math.floor(n);\n    const negative = n < 0;\n    const abs = Math.abs(n).toString();\n    const parts = [];\n    for (let i = abs.length; i > 0; i -= 3) {\n        parts.unshift(abs.slice(Math.max(0, i - 3), i));\n    }\n    return (negative ? \"-\" : \"\") + parts.join(\",\");\n}\n\nfunction fmtNet(n) {\n    return (n >= 0 ? \"+\" : \"\") + formatInt(n);\n}\n\nfunction padL(str, width) {\n    const s = String(str);\n    return \" \".repeat(Math.max(0, width - s.length)) + s;\n}\n\nfunction padR(str, width) {\n    const s = String(str);\n    return s + \" \".repeat(Math.max(0, width - s.length));\n}\n\nfunction marketMap() {\n    const orders = Game.market.getAllOrders();\n    const rooms = {};\n    let skipped = 0;\n\n    for (const o of orders) {\n        if (o.active === false) {\n            skipped++;\n            continue;\n        }\n        if (ACCOUNT_RESOURCES.has(o.resourceType)) continue;\n        if (!o.roomName) continue;\n\n        if (!rooms[o.roomName]) {\n            rooms[o.roomName] = { sells: 0, buys: 0, sellRes: {}, buyRes: {} };\n        }\n        const entry = rooms[o.roomName];\n        const value = o.price * o.remainingAmount;\n\n        if (o.type === ORDER_SELL) {\n            entry.sells += value;\n            entry.sellRes[o.resourceType] = (entry.sellRes[o.resourceType] || 0) + value;\n        } else {\n            entry.buys += value;\n            entry.buyRes[o.resourceType] = (entry.buyRes[o.resourceType] || 0) + value;\n        }\n    }\n\n    const rows = [];\n    for (const roomName in rooms) {\n        const r = rooms[roomName];\n        const total = r.sells + r.buys;\n        if (total === 0) continue;\n\n        const net = r.sells - r.buys;\n        const allRes = new Set([...Object.keys(r.sellRes), ...Object.keys(r.buyRes)]);\n        const resTags = [...allRes].sort().map(res => {\n            const hasSell = r.sellRes[res] > 0;\n            const hasBuy = r.buyRes[res] > 0;\n            if (hasSell && hasBuy) return `${res}(B)`;\n            if (hasSell) return `${res}(^)`;\n            return `${res}(v)`;\n        }).join(\" \");\n\n        rows.push({ room: roomName, sells: r.sells, buys: r.buys, net, total, resources: resTags });\n    }\n\n    rows.sort((a, b) => b.total - a.total);\n\n    const wRoom = Math.max(4, ...rows.map(r => r.room.length), 4);\n    const wSell = Math.max(5, ...rows.map(r => formatInt(r.sells).length), 5);\n    const wBuy = Math.max(4, ...rows.map(r => formatInt(r.buys).length), 4);\n    const wNet = Math.max(3, ...rows.map(r => fmtNet(r.net).length), 3);\n\n    const lines = [];\n    const header = `${padR(\"Room\", wRoom)} | ${padL(\"Sells\", wSell)} | ${padL(\"Buys\", wBuy)} | ${padL(\"Net\", wNet)} | Resources`;\n    lines.push(header);\n    lines.push(\"-\".repeat(header.length));\n\n    for (const r of rows) {\n        const line = `${padR(r.room, wRoom)} | ${padL(formatInt(r.sells), wSell)} | ${padL(formatInt(r.buys), wBuy)} | ${padL(fmtNet(r.net), wNet)} | ${r.resources}`;\n        lines.push(line);\n    }\n\n    console.log(lines.join(\"\\n\"));\n    if (rows.length === 0) {\n        console.log(`[marketMap] No rooms mapped. Total orders scanned: ${orders.length}. Skipped inactive: ${skipped}`);\n    }\n    return `${rows.length} rooms mapped`;\n}\n\nglobal.marketMap = marketMap;\nmodule.exports = marketMap;\n",
+  nukeAnalyze: "// nukeAnalyze.js — see Setup tab for full source and wiring instructions.\n// Download the file from the Setup & Docs tab for the complete 1500+ line module.",
+  mainJsSnippet: "const nukeAnalyzeModule = require('nukeAnalyze');\nrequire('marketMap');\n\n// Expose nukeAnalyze globals (outside the loop)\nglobal.nukeAnalyze      = nukeAnalyzeModule.nukeAnalyze;\nglobal.nukeAnalyzeSelf  = nukeAnalyzeModule.nukeAnalyzeSelf;\nglobal.nukeAnalyzeCost  = nukeAnalyzeModule.nukeAnalyzeCost;\nglobal.nukeIncoming     = nukeAnalyzeModule.nukeIncoming;\nglobal.nukeThreat       = nukeAnalyzeModule.nukeThreat;\nglobal.nukeThreatStatus = nukeAnalyzeModule.nukeThreatStatus;\nglobal.nukeThreatCancel = nukeAnalyzeModule.nukeThreatCancel;\n\n// Inside module.exports.loop — call every tick\nmodule.exports.loop = function() {\n    // ... your existing code ...\n    nukeAnalyzeModule.processPendingNukeAnalyze();\n    // ... rest of loop ...\n};"
+};
 
+let _setupInited = false;
+function initSetupTab() {
+  if (_setupInited) return;
+  _setupInited = true;
+  const mmPre = document.getElementById('mmSourcePre');
+  if (mmPre) mmPre.textContent = _srcFiles.marketMap;
+  const naPre = document.getElementById('naSourcePre');
+  if (naPre) naPre.textContent = _srcFiles.nukeAnalyze;
+  const mainPre = document.getElementById('mainJsSnippetPre');
+  if (mainPre) mainPre.textContent = _srcFiles.mainJsSnippet;
+}
+function getMainJsSnippet() { return _srcFiles.mainJsSnippet; }
+function copyCode(btn, text) {
+  navigator.clipboard.writeText(text).then(() => {
+    const orig = btn.textContent; btn.textContent = '✓ Copied!'; btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = orig; btn.classList.remove('copied'); }, 2000);
+  }).catch(() => {
+    const ta = document.createElement('textarea');
+    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+    const orig = btn.textContent; btn.textContent = '✓ Copied!'; btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = orig; btn.classList.remove('copied'); }, 2000);
+  });
+}
+function copySourceFile(btn, key) { copyCode(btn, _srcFiles[key]); }
+function downloadSourceFile(key, filename) {
+  const blob = new Blob([_srcFiles[key]], {type: 'text/javascript'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+function toggleExpand(btn, preId) {
+  const pre = document.getElementById(preId);
+  if (!pre) return;
+  const expanded = pre.classList.toggle('expanded');
+  btn.textContent = expanded ? '▲ Collapse' : '▼ Show full file';
+}
+
+// ── Boot ───────────────────────────────────────────────────────────────────
 window.addEventListener('load', () => {
     populateTimezones();
     setTimeout(initNukeMap, 100); setTimeout(initMarketTab, 110);
     setTimeout(restoreCountdownIfAny, 120);
 });
-window.addEventListener('resize', () => { if (document.getElementById('nukeCanvas')) initNukeMap(); if (document.getElementById('marketCanvas')) resizeMarketCanvas(); });
+window.addEventListener('resize', () => {
+    if (document.getElementById('nukeCanvas')) initNukeMap();
+    if (document.getElementById('marketCanvas')) resizeMarketCanvas();
+});
 document.addEventListener('change', e => { if (e.target && e.target.id === 'showDamageLabels') drawMap(); });
 </script>
 </body>

@@ -22,6 +22,94 @@ A single-file, browser-based toolkit for Screeps players. No build step, no depe
 
 ---
 
+## Screeps Integration
+
+The Nuke Simulator and Market Map tabs are designed to work with two companion Screeps modules: `nukeAnalyze.js` and `marketMap.js`. You run commands in the Screeps console to generate reports, copy the output, and paste it into the frontend. This section covers how to install both modules and wire them into your codebase.
+
+### Installing nukeAnalyze
+
+**Step 1 — Add the file**
+
+Copy `nukeAnalyze.js` into your Screeps source directory alongside your other modules (next to `main.js`, or inside `src/` if you use a bundler). The file name must match exactly what you `require()`.
+
+**Step 2 — Wire it into main.js**
+
+At the top of `main.js` with your other requires:
+
+```js
+const nukeAnalyzeModule = require('nukeAnalyze');
+```
+
+Then expose the console commands as globals, outside the loop:
+
+```js
+global.nukeAnalyze      = nukeAnalyzeModule.nukeAnalyze;
+global.nukeAnalyzeSelf  = nukeAnalyzeModule.nukeAnalyzeSelf;
+global.nukeAnalyzeCost  = nukeAnalyzeModule.nukeAnalyzeCost;
+global.nukeIncoming     = nukeAnalyzeModule.nukeIncoming;
+global.nukeThreat       = nukeAnalyzeModule.nukeThreat;
+global.nukeThreatStatus = nukeAnalyzeModule.nukeThreatStatus;
+global.nukeThreatCancel = nukeAnalyzeModule.nukeThreatCancel;
+```
+
+Finally, call the tick processor **inside your main loop** on every tick:
+
+```js
+module.exports.loop = function() {
+    // ... your existing code ...
+    nukeAnalyzeModule.processPendingNukeAnalyze();
+    // ... rest of loop ...
+};
+```
+
+`processPendingNukeAnalyze()` handles observer auto-complete. If you skip this call, commands that queue an observer request for a room you can't currently see will never resolve.
+
+**Step 3 — Optional dependencies**
+
+The module soft-requires three other modules at runtime. If you don't have them it still works — those features degrade gracefully:
+
+| Module | Used for | Without it |
+|---|---|---|
+| `iff` | Whitelist check in `nukeThreat` — identifies friendly vs hostile players | Every player is treated as hostile |
+| `marketBuy` | Buy-side energy and ghodium prices for credit cost estimates | Falls back to scanning `Game.market.getAllOrders()` directly |
+| `roleOperator` | PWR_OPERATE_OBSERVER fallback for rooms out of standard observer range | Only standard observers are used |
+
+### Installing marketMap
+
+**Step 1 — Add the file**
+
+Copy `marketMap.js` into the same directory as your other modules.
+
+**Step 2 — Wire it into main.js**
+
+```js
+require('marketMap');
+```
+
+That single line is enough — the module registers `global.marketMap` itself at load time. If you prefer explicit control, `global.marketMap = require('marketMap')` is equivalent. No loop integration is needed; `marketMap` is a pure read operation that runs entirely within one console call.
+
+### main.js checklist
+
+```js
+// 1. Require both modules
+const nukeAnalyzeModule = require('nukeAnalyze');
+require('marketMap');
+
+// 2. Expose nukeAnalyze globals
+global.nukeAnalyze      = nukeAnalyzeModule.nukeAnalyze;
+global.nukeAnalyzeSelf  = nukeAnalyzeModule.nukeAnalyzeSelf;
+global.nukeAnalyzeCost  = nukeAnalyzeModule.nukeAnalyzeCost;
+global.nukeIncoming     = nukeAnalyzeModule.nukeIncoming;
+global.nukeThreat       = nukeAnalyzeModule.nukeThreat;
+global.nukeThreatStatus = nukeAnalyzeModule.nukeThreatStatus;
+global.nukeThreatCancel = nukeAnalyzeModule.nukeThreatCancel;
+
+// 3. Inside module.exports.loop — every tick
+nukeAnalyzeModule.processPendingNukeAnalyze();
+```
+
+---
+
 ## Tick ETA
 
 Converts a number of ticks into a real-world duration from **right now**, and optionally tells you the local clock time of arrival in two timezones.
@@ -33,7 +121,7 @@ Converts a number of ticks into a real-world duration from **right now**, and op
 
 ### Optional: Timezone Comparison
 
-Expand the timezone section by selecting values in both dropdowns. Your local timezone is auto-detected and pre-filled. This is useful for planning attacks timed around an enemy player's sleep schedule — you see the arrival clock time in both timezones side by side.
+Select values in both timezone dropdowns. Your local timezone is auto-detected and pre-filled. This is useful for planning attacks timed around an enemy player's sleep schedule — you see the arrival clock time in both timezones side by side.
 
 ### Output
 
@@ -62,20 +150,51 @@ The inverse of Tick ETA: given a future date and time of day, how many ticks awa
 
 ## Nuke Simulator
 
-Visualizes the damage dealt by one or more nukes against a room's defenses. Works by parsing a pre-formatted cost analysis report (see format below), drawing a color-coded grid of every affected structure tile, and producing a sortable per-structure damage summary.
+Visualizes the damage dealt by one or more nukes against a room's defenses. Works by parsing a pre-formatted cost analysis report, drawing a color-coded grid of every affected structure tile, and producing a per-structure damage summary.
 
-### Step 1 — Paste a report and click **Parse Report**
+### Step 1 — Generate a report in Screeps
 
-The parser reads the text and extracts:
+Two commands produce the report format this tab expects:
+
+**`nukeIncoming` — you have nukes landing on you**
+
+This is the most common starting point. It scans your owned rooms for incoming nukes using `FIND_NUKES`, then automatically calls `nukeAnalyzeCost` with all landing positions at once so stacked tile damage is correctly calculated.
+
+```js
+nukeIncoming()           // All owned rooms
+nukeIncoming('W1N46')    // One specific room
+```
+
+**`nukeAnalyzeCost` — manual strike analysis**
+
+Use this when you already know the coordinates — for example, when scouting a room you're planning to attack and want to see what damage a strike at a specific tile would deal.
+
+```js
+// Single strike at (25, 25) in W5N10
+nukeAnalyzeCost('W5N10', 25, 25)
+
+// Multiple simultaneous strikes — tile damage is stacked automatically
+nukeAnalyzeCost('W5N10', [{x:25, y:25}, {x:30, y:28}])
+```
+
+If the target room isn't currently visible, both commands automatically queue an observer request and print `🔭 Observing W5N10 … Auto-completing next tick.` — the result appears the following tick with no further action needed.
+
+**Collecting the output**
+
+All commands print directly to the Screeps console. Click inside the console output area, select the text of the report from the first `════` line to the last one, and copy it. You only need the report block itself, not surrounding log lines from other modules.
+
+### Step 2 — Paste the report and click **Parse Report**
+
+The parser extracts:
 
 - **Nuke positions** — Tokens in the form `@ (x,y)` or `+ (x,y)` mark impact centers. More than one token means stacked nukes.
 - **Structure coordinates** — Any line with a `(x,y)` pattern is associated with the nearest recognized building name (`spawn`, `tower`, `extension`, `lab`, `terminal`, `nuker`, `observer`, `storage`, `link`, `powerSpawn`).
 - **Rampart HP** — Lines containing `rampart WEAK` or `rampart ok` followed by an HP value (e.g. `401k HP`) are parsed and attached to the tile.
-- **Stacked damage** — If the report states a total like `= 15M stacked`, that value is used. Otherwise the tool calculates it: 10M at the direct center tile, 5M for every surrounding tile within radius 2, accumulating across multiple nukes.
+- **Stacked damage** — If the report states a total like `= 15M stacked`, that value is used directly. Otherwise the tool calculates it: 10M at the direct center tile, 5M for every surrounding tile within radius 2, accumulated across multiple nukes.
 
-Parse status (e.g. "Parsed 1 nuke and 7 structures") appears briefly below the buttons.
+A parse status message (e.g. `Parsed 1 nuke and 7 structures`) appears briefly below the buttons.
 
-### Step 2 — Click **Calculate Damage**
+### Step 3 — Click **Calculate Damage**
 
 This runs the damage math and populates:
 
@@ -93,15 +212,13 @@ Each cell represents one room tile within the blast bounding box. Tile colors:
 | Dark amber | Rampart present but below the stacked threshold (multiple nukes overlap here) |
 | Dark green | Rampart HP exceeds incoming damage — building survives |
 
-Dashed border outlines mark each nuke's 5×5 blast zone; a thicker border marks the center tile of each nuke. Zone outline colors cycle through blue → amber → red → green → purple for multiple nukes.
-
-**Row/column coordinates** are shown along the top and left edges of the canvas.
+Dashed border outlines mark each nuke's 5×5 blast zone; a thicker border marks the center tile of each nuke. Zone outline colors cycle through blue → amber → red → green → purple for multiple nukes. Row/column coordinates are shown along the top and left edges.
 
 ### Interacting with the Map
 
 - **Hover** a structure tile to see a tooltip: rampart HP, building HP, stacked damage, and survival status.
 - **Click** a structure tile to jump to and highlight its entry in the damage report below. If the report hasn't been generated yet, it's generated automatically first.
-- Toggle **HP labels** (checkbox, top-right of the controls) to show or hide the rampart HP value printed inside each tile. Labels appear when tiles are large enough (≥ 20 px per side).
+- Toggle **HP labels** (checkbox in the controls) to show or hide the rampart HP value printed inside each tile. Labels appear when tiles are large enough (≥ 20 px per side).
 - Click **Clear** to reset everything and start over.
 
 ### Expected Report Format
@@ -115,15 +232,47 @@ PER-TILE BREAKDOWN:  (roads, walls, containers ignored; empty tiles omitted)
 ────────────────────────────────────────────────────────────────────────
   [AREA]   (42,29)   5M area    |  ⚠️  rampart WEAK  401k HP  (need >5.0M)
       🏗  extension  rebuild: 3ke  (55.0k cr)  💥 at risk
+      📉 Rampart investment at risk: 401k HP  =  4ke  (73.6k cr)
+      🔧 To protect: need 4.6M more HP  =  46ke  (843.8k cr)
 
   [CENTER] (41,30)  10M direct  |  ⚠️  rampart WEAK  396k HP  (need >10.0M)
       🏗  spawn  rebuild: 15ke  (275.2k cr)  +  stored: 807 cr  💥 at risk
+      📉 Rampart investment at risk: 396k HP  =  4ke  (72.6k cr)
+      🔧 To protect: need 9.6M more HP  =  96ke  (1.76M cr)
 
   ...
+════════════════════════════════════════════════════════════════════════
+REPLACEMENT COST  (all buildings in blast, ignoring rampart protection):
+  Build energy:     33ke  (605.5k cr)
+  Lost resources:   807 cr
+  TOTAL:            606.3k cr
+...
 ════════════════════════════════════════════════════════════════════════
 ```
 
 The `@` (or `+`) before the coordinates in the header marks the nuke center. Multiple `@ (x,y)` tokens produce multiple overlapping blast zones.
+
+### nukeAnalyze Console Command Reference
+
+**Generating reports for the frontend:**
+
+| Command | When to use |
+|---|---|
+| `nukeIncoming()` | You've received a nuke warning — scans all owned rooms and generates a stacked-damage report automatically |
+| `nukeIncoming('ROOM')` | Same, limited to one room |
+| `nukeAnalyzeCost('ROOM', x, y)` | You know the coordinates — generates a report for one strike |
+| `nukeAnalyzeCost('ROOM', [{x,y},…])` | Multiple simultaneous strikes with stacked damage |
+
+**Other offensive planning tools (output is not pasted into the frontend):**
+
+| Command | What it does |
+|---|---|
+| `nukeAnalyze('ROOM')` | Find the single best offensive strike position by credit value |
+| `nukeAnalyze('ROOM', N)` | Find the best N sequential strike positions |
+| `nukeAnalyzeSelf()` | Compact best-strike summary for all your owned rooms |
+| `nukeThreat('ROOM')` | Scan surrounding rooms for hostile nukers; test if they can destroy all key structures |
+| `nukeThreatStatus('ROOM')` | Check progress of an active threat scan |
+| `nukeThreatCancel('ROOM')` | Cancel and clean up a threat scan |
 
 ---
 
@@ -174,9 +323,37 @@ You can tweak any field after applying a template.
 
 Renders a pan/zoom world map of net exporters (green circles) and importers (red circles) from a pasted trading summary. Circle size scales to absolute net flow volume — the bigger the circle, the more resource is moving through that room.
 
-### Step 1 — Paste data and click **Process Data**
+### Step 1 — Generate a report in Screeps
 
-Expected line format:
+Type this in the Screeps console:
+
+```js
+marketMap()
+```
+
+The function scans `Game.market.getAllOrders()`, groups active sell and buy orders by room, calculates net flow per room, and tags each resource with `(^)` sold, `(v)` bought, or `(B)` both. Output:
+
+```
+Room    |         Sells |          Buys |           Net | Resources
+------------------------------------------------------------------------
+W51N7   | 1,015,667,400 |             0 | +1,015,667,400 | power(^) silicon(^)
+W14N3   |             0 |   740,693,610 |  -740,693,610 | energy(v)
+E43N53  |     1,420,633 |     3,098,198 |    -1,677,565 | power(B) G(v)
+```
+
+You can optionally prepend snapshot metadata lines before pasting — the frontend will display them in the sidebar:
+
+```
+Hourly snapshots recorded: 24
+Last snapshot: 2024-01-15 03:00 UTC
+Room    | Sells | ...
+```
+
+**Collecting the output:** click inside the Screeps console, select the entire table from the header row through the last data row, and copy it. Include the header row (`Room | Sells | ...`) — the parser uses it for column alignment. The separator line (`---...`) is ignored automatically.
+
+### Step 2 — Paste data and click **Process Data**
+
+The parser accepts lines in this format:
 
 ```
 Room | Sells | Buys | Net | Resources
@@ -184,14 +361,7 @@ W51N7  | 1,015,667,400 | 0 | +1,015,667,400 | alloy(^) silicon(^)
 W14N3  | 0 | 740,693,610 | -740,693,610 | energy(v)
 ```
 
-- The header row and separator lines (`---`) are ignored automatically.
-- Numbers may include commas. The `+` or `-` sign on `Net` is optional; the parser infers direction from the value.
-- **Resource markers**: `(^)` = sold at this room, `(v)` = bought at this room, `(B)` = both.
-- Optional metadata lines anywhere in the paste:
-  - `Hourly snapshots recorded: 24` — shown in the sidebar stat.
-  - `Last snapshot: 2024-01-15 03:00 UTC` — shown as the snapshot note.
-
-Click **Load Example** to populate a small demo dataset without pasting anything.
+Numbers may include commas. The `+` or `-` sign on `Net` is optional. The header row and separator lines are ignored. Click **Load Example** to populate a small demo dataset without pasting anything.
 
 ### Navigating the Map
 
@@ -225,8 +395,8 @@ The grid background tints rooms by type before any circles are drawn:
 
 All filters combine — only rooms matching every active filter are drawn.
 
-- **Trade direction** — Toggle **Exporters** to show only rooms with positive net flow, or **Importers** for negative. Click the active button again to clear the filter (show both).
-- **Order source** — Toggle **NPC only** to show only crossroad rooms (where NPC terminals are documented), or **Hide NPC** to exclude them. Click again to clear.
+- **Trade direction** — Toggle **Exporters** to show only rooms with positive net flow, or **Importers** for negative. Click the active button again to clear the filter.
+- **Order source** — Toggle **NPC only** to show only crossroad rooms (where NPC terminals are documented), or **Hide NPC** to exclude them. Useful for separating player order volume from NPC terminal volume. Click again to clear.
 - **Available resources** — Click a resource chip to filter for rooms that traded that resource. Click the active chip again to clear. Only one resource filter can be active at a time. The chip list is built from whatever resources appear in the pasted data.
 
 ### Sidebar Stats
@@ -234,7 +404,7 @@ All filters combine — only rooms matching every active filter are drawn.
 - **Rooms** — Count of rooms currently visible after filters.
 - **Visible snapshot** — The `Hourly snapshots recorded` value from the pasted header, if present.
 - **Largest exporter / importer** — The room with the highest absolute positive / negative net flow among currently visible rooms.
-- **Selected Room** — Detailed breakdown for the last clicked room: net flow, sells vs. buys, raw resource string, parsed route markers with their meanings, and snapshot metadata.
+- **Selected Room** — Detailed breakdown for the last clicked room: net flow, sells vs. buys, raw resource string, parsed route markers with their meanings and color-coded direction pills, and snapshot metadata.
 
 ---
 
