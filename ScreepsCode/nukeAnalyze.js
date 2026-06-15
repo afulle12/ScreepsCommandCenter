@@ -618,7 +618,7 @@ function nukeAnalyze(roomName, numNukes) {
         lines.push('Targets: ' + coordList);
     }
     lines.push(div);
-    console.log(lines.join('\\n'));
+    console.log(lines.join('\n'));
 
     return {
         room: roomName, numNukes: numNukes,
@@ -750,7 +750,7 @@ function nukeAnalyzeCost(roomName, cxOrStrikes, cy) {
                type === STRUCTURE_CONTROLLER;   // FIX #12: also ignore controllers
     }
 
-    // ─── Build per-tile stacked damage map ─────────────────────────────────
+    // ── Build per-tile stacked damage map ─────────────────────────────────
     var tileDamage = {};
 
     for (var ni = 0; ni < strikes.length; ni++) {
@@ -770,7 +770,7 @@ function nukeAnalyzeCost(roomName, cxOrStrikes, cy) {
         }
     }
 
-    // ─── Per-tile analysis using stacked damage totals ─────────────────────
+    // ── Per-tile analysis using stacked damage totals ─────────────────────
     var totalReplaceBuildEnergy  = 0;
     var totalReplaceStored       = 0;
     var totalRampartAtRiskEnergy = 0;
@@ -865,7 +865,7 @@ function nukeAnalyzeCost(roomName, cxOrStrikes, cy) {
 
     tileResults.sort(function(a, b) { return a.y !== b.y ? a.y - b.y : a.x - b.x; });
 
-    // ─── Build report ──────────────────────────────────────────────────────
+    // ── Build report ──────────────────────────────────────────────────────
     var div  = '════════════════════════════════════════════════════════════════════════';
     var div2 = '────────────────────────────────────────────────────────────────────────';
     var lines = [];
@@ -960,7 +960,7 @@ function nukeAnalyzeCost(roomName, cxOrStrikes, cy) {
     }
     lines.push(div);
 
-    console.log(lines.join('\\n'));
+    console.log(lines.join('\n'));
 
     return {
         room: roomName, strikes: strikes,
@@ -1062,7 +1062,7 @@ function nukeAnalyzeSelf() {
         var rcl = room.controller ? room.controller.level : 0;
         lines.push(rn + ' (RCL' + rcl + ')  -  Best: (' + best.cx + ', ' + best.cy + ')  -  ' + fmt(best.totalCredits) + '  (' + pct + '% of nuke cost)');
     }
-    console.log(lines.join('\\n'));
+    console.log(lines.join('\n'));
 }
 
 // ─── nukeIncoming ─────────────────────────────────────────────────────────────
@@ -1098,25 +1098,27 @@ function nukeIncoming(filterRoom) {
                     Memory.nukeAnalyzePending[filterRoom] = { tick: Game.time, observerRoom: observer.room.name, incomingMode: true };
                     console.log('[NukeIncoming] 🔭 Observing ' + filterRoom + ' via observer in ' + observer.room.name + '. Auto-completing incoming scan next tick.');
                     return { status: 'pending', room: filterRoom, observerRoom: observer.room.name };
-            }
-            console.log('[NukeIncoming] Observer found but observeRoom() returned code ' + obsResult + '.');
-        }
-
-        try {
-            var roleOperator = require('roleOperator');
-            if (roleOperator && typeof roleOperator.findPowerObserver === 'function') {
-                var po = roleOperator.findPowerObserver(filterRoom);
-                if (po) {
-                    Memory.intelPowerObserve[poKey] = { operatorName: po.operatorName, operatorRoom: po.operatorRoom, observerId: po.observerId, tick: Game.time };
-                    Memory.nukeAnalyzePending[filterRoom] = { tick: Game.time, observerRoom: po.operatorRoom, poweredObserver: true, incomingMode: true };
-                    console.log('[NukeIncoming] 🔭⚡ Requesting PWR_OPERATE_OBSERVER from ' + po.operatorName + '. Will auto-complete when visible.');
-                    return { status: 'pending_power_observe', room: filterRoom, operatorName: po.operatorName };
                 }
             }
-        } catch (e) {}
 
-        console.log('[NukeIncoming] ERROR: ' + filterRoom + ' is not visible. No observer in range. Send a scout.');
-        return null;
+            try {
+                var roleOperator = require('roleOperator');
+                if (roleOperator && typeof roleOperator.findPowerObserver === 'function') {
+                    var po = roleOperator.findPowerObserver(filterRoom);
+                    if (po) {
+                        Memory.intelPowerObserve[poKey] = { operatorName: po.operatorName, operatorRoom: po.operatorRoom, observerId: po.observerId, tick: Game.time };
+                        Memory.nukeAnalyzePending[filterRoom] = { tick: Game.time, observerRoom: po.operatorRoom, poweredObserver: true, incomingMode: true };
+                        console.log('[NukeIncoming] 🔭⚡ Requesting PWR_OPERATE_OBSERVER from ' + po.operatorName + '. Will auto-complete when visible.');
+                        return { status: 'pending_power_observe', room: filterRoom, operatorName: po.operatorName };
+                    }
+                }
+            } catch (e) {}
+
+            console.log('[NukeIncoming] ERROR: ' + filterRoom + ' is not visible. No observer in range. Send a scout.');
+            return null;
+        }
+
+        return _scanRoomForNukes(filterRoom, room);
     }
 
     var myRooms    = [];
@@ -1459,17 +1461,17 @@ function nukeThreat(targetRoom) {
 function nukeThreatStatus(targetRoom) {
     var scan = Memory.nukeThreatScans ? Memory.nukeThreatScans[targetRoom] : null;
     if (!scan) {
-        console.log('[NukeThreatStatus] No active scan for ' + targetRoom + '.');
+        console.log('[NukeThreat] No active scan for ' + targetRoom + '.');
         return;
     }
     var total    = Object.keys(scan.roomsToScan).length;
     var finished = scan.scannedCount + scan.unscannableCount;
-    console.log('[NukeThreatStatus] Status for ' + targetRoom + ': ' +
+    console.log('[NukeThreat] Status for ' + targetRoom + ': ' +
                 finished + '/' + total + ' rooms (' +
                 scan.scannedCount + ' visible, ' + scan.unscannableCount + ' unscannable). ' +
                 (scan.scanComplete ? 'Complete.' : 'In progress.'));
     if (scan.scanComplete && scan.bestHostileOwner) {
-        console.log('[NukeThreatStatus] Most threatening: ' + scan.bestHostileOwner +
+        console.log('[NukeThreat] Most threatening: ' + scan.bestHostileOwner +
                     ' with ' + scan.operationalNukeCount + ' nukes. ' +
                     'Can destroy key structures: ' + (scan.threatPossible ? 'YES' : 'NO'));
     }
