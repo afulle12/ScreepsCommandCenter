@@ -1,6 +1,6 @@
 # Screeps Command Center
 
-A single-file, browser-based toolkit for Screeps players. No build step, no dependencies, no server — open `ScreepsCommandCenter.html` and everything runs client-side. It bundles five utilities for planning offensives, sizing creeps, timing events, and visualizing market activity across the world map.
+A single-file, browser-based toolkit for Screeps players. No build step, no dependencies, no server — open `ScreepsCommandCenter.html` and everything runs client-side. It bundles seven utilities for planning offensives, sizing creeps, timing events, ranking factory and lab reactions, and visualizing market activity across the world map.
 
 ## Screenshots
 
@@ -14,17 +14,19 @@ A single-file, browser-based toolkit for Screeps players. No build step, no depe
 
 | Tab | Purpose |
 |---|---|
+| **Market Map** | Pan/zoom world map of net exporters and importers from a trading summary |
+| **Factory & Lab Profit** | Rank every factory / lab reaction by credit margin from a JSON market snapshot |
 | **Tick ETA** | Ticks → real-world duration, with timezone comparison and live countdown |
-| **Time → Ticks** | Real-world date/time → tick count |
+| **Reverse ETA** | Real-world date/time → tick count |
 | **Nuke Simulator** | Paste a cost analysis report, visualize blast zones and rampart survivability |
 | **Body Calculator** | Build and optimize creep bodies against an energy budget |
-| **Market Map** | Pan/zoom world map of net exporters and importers from a trading summary |
+| **Setup & Docs** | In-app installation guide and console command reference |
 
 ---
 
 ## Screeps Integration
 
-The Nuke Simulator and Market Map tabs are designed to work with two companion Screeps modules: `nukeAnalyze.js` and `marketMap.js`. You run commands in the Screeps console to generate reports, copy the output, and paste it into the frontend. This section covers how to install both modules and wire them into your codebase.
+The Nuke Simulator, Market Map, and Factory & Lab Profit tabs are designed to work with three companion Screeps modules: `nukeAnalyze.js`, `marketMap.js`, and `rawMarketDataGlobal.js`. You run commands in the Screeps console to generate reports, copy the output, and paste it into the frontend. This section covers how to install all three modules and wire them into your codebase.
 
 ### Installing nukeAnalyze
 
@@ -88,12 +90,27 @@ require('marketMap');
 
 That single line is enough — the module registers `global.marketMap` itself at load time. If you prefer explicit control, `global.marketMap = require('marketMap')` is equivalent. No loop integration is needed; `marketMap` is a pure read operation that runs entirely within one console call.
 
+### Installing rawMarketDataGlobal
+
+**Step 1 — Add the file**
+
+Copy `rawMarketDataGlobal.js` into the same directory as your other modules.
+
+**Step 2 — Wire it into main.js**
+
+```js
+require('rawMarketDataGlobal');
+```
+
+That single line is enough — the module registers `global.rawMarketData` itself at load time. No loop integration is needed; `rawMarketData` runs entirely within one console call and just snapshots `Game.market` state.
+
 ### main.js checklist
 
 ```js
-// 1. Require both modules
+// 1. Require all three modules
 const nukeAnalyzeModule = require('nukeAnalyze');
 require('marketMap');
+require('rawMarketDataGlobal');
 
 // 2. Expose nukeAnalyze globals
 global.nukeAnalyze      = nukeAnalyzeModule.nukeAnalyze;
@@ -131,7 +148,7 @@ Select values in both timezone dropdowns. Your local timezone is auto-detected a
 
 ---
 
-## Time → Ticks
+## Reverse ETA
 
 The inverse of Tick ETA: given a future date and time of day, how many ticks away is it?
 
@@ -316,6 +333,84 @@ You can tweak any field after applying a template.
 | HEAL | 250 |
 | TOUGH | 10 |
 | CLAIM | 600 |
+
+---
+
+## Factory & Lab Profit
+
+Ranks every Screeps factory and lab reaction by credit margin and profit-per-tick, from a JSON snapshot of current market state. Lets you pick the right commodity to produce at the moment, instead of guessing from a price list.
+
+### Step 1 — Generate a snapshot in Screeps
+
+The tab expects JSON produced by the companion `rawMarketDataGlobal.js` module. Once installed (see [Installing rawMarketDataGlobal](#installing-rawmarketdataglobal)), run one of these in the console:
+
+```js
+rawMarketData()              // base snapshot — prices + order books
+rawMarketData(null, true)    // also include forward / reverse / factory / decompression analysis
+```
+
+The `null, true` form includes the same per-resource analysis the tab can compute itself, plus the 14-day `history` arrays used to render price-trend sparklines. Either form works; the analysis flag is optional.
+
+**Collecting the output:** `rawMarketData()` is a single multi-screen JSON blob. Either copy the entire console output, or right-click the first line, **Store**, then `JSON.stringify(Memory._savedSnippet)` and copy from there — anything that gets the full JSON into your clipboard works.
+
+### Step 2 — Paste JSON and click **Calculate**
+
+Paste the JSON into the input area and click **Calculate**. The tab parses `data.resources`, `data.energyPrice`, and (if present) `data.tick` / `data.generated` metadata.
+
+The embedded snapshot shipped with the tool is auto-loaded on first visit so the tab renders immediately. Click **Reset** to restore that default.
+
+### Revenue source filter
+
+The output of every recipe is priced from `Game.market` buy orders. The filter below the input controls which orders count as the "best buy":
+
+- **Both** (default) — cheapest buy order across the whole order book.
+- **NPC only** — only orders in highway rooms (one coordinate divisible by 10), approximating the documented NPC terminal positions.
+- **Player only** — everything else.
+
+When the input lacks an order book (the default embedded snapshot, for example), this filter has no effect and a warning is shown next to the metric card.
+
+### Cost model
+
+| Quantity | Source |
+|---|---|
+| Mineral / compound input | `avg48h` from the snapshot (volume-weighted 48h average) |
+| Energy input | best energy buy order + 0.1 cr/unit |
+| Lab reagent / output | 5u per reagent, 5u output per reaction (5×5 fixed batch) |
+| Factory output | recipe-defined batch size (`qty`) |
+
+### Output sections
+
+| Section | Contents |
+|---|---|
+| **Base-costs table** | All base minerals + the 14-day price trend sparkline (only when history is in the snapshot) |
+| **Metric cards** | Products priced, best profit / tick (and which commodity it is), profitable count (factory / lab), revenue source used, energy cost applied |
+| **No-Deposit Products** | Bars and base commodities (composite, crystal, liquid are listed under Common below) — sorted by profit per tick |
+| **Common Higher Commodities** | Composite, crystal, liquid — shared across all factory chains |
+| **Deposit-Dependent Chains** | Mechanical, biological, electronical, mystical — one card per chain; first-tier rows show the break-even price for the missing regional deposit resource |
+| **Lab Reactions** | Every mineral compound sorted by profit per tick; compounds with no buy orders dimmed at the bottom |
+
+Each row in a chain or lab section shows the product, its factory level (any, 1, 2, …), competitive bid, cost per run, profit per tick, and available volume. A small `N/P` chip under the bid shows how many NPC vs. player orders back the price — hover it for a tooltip.
+
+### Performance rating
+
+Every profit-per-tick value is tagged with a coloured rating chip:
+
+| Rating | Range (cr/tick) |
+|---|---|
+| S | ≥ 1000 |
+| A | ≥ 500 |
+| B | ≥ 200 |
+| C | ≥ 50 |
+| D | ≥ 0 |
+| F | < 0 (loss) |
+
+### rawMarketData Console Command Reference
+
+| Command | What it does |
+|---|---|
+| `rawMarketData()` | Base snapshot — 48h averages, best buy/sell, full order books, 14-day history per resource |
+| `rawMarketData(null, true)` | Same, plus forward / reverse lab reactions, factory compression, and decompression margin analysis |
+| `rawMarketData('energy')` | Snapshot for a single resource — much faster for quick checks |
 
 ---
 

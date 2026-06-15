@@ -1,0 +1,19 @@
+# OS / editor noise
+.DS_Store
+Thumbs.db
+
+# IDE
+/.vscode/
+/.idea/
+
+# Node / build artifacts
+node_modules/
+*.log
+
+# Environment / secrets
+.env
+.env.local
+
+# Local agent / tooling data
+/.agents/
+/ScreepsDataDocs/
